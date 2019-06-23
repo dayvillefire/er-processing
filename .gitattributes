@@ -1,0 +1,2 @@
+duty.sql filter=git-crypt diff=git-crypt
+reports/Duty*.sql filter=git-crypt diff=git-crypt
