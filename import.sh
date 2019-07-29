@@ -14,10 +14,19 @@ fi
 TABLES=(
 	Authorize
 	Apparatus
+	Events
+	EventItems
+	EventType
 	Exposures
 	ExposureUser
 	Incidents
 	Narratives
+	NHTSAPatients
+	NHTSAPersonnel
+	PayrollItems
+	PayrollTimes
+	Schedule
+	Stations
 	Users
 )
 
