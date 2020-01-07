@@ -3,7 +3,8 @@
 ### @jbuchbinder
 ###
 
-SELECT '2018-01-01 00:00:00' INTO @startPosition;
+SELECT '2019-01-01 00:00:00' INTO @startPosition;
+SELECT '2020-01-01 00:00:00' INTO @endPosition;
 
 SELECT
   i.IncidentDateTime,
@@ -15,7 +16,7 @@ FROM Exposures e
   LEFT OUTER JOIN Incidents i ON i.IncidentID = e.IID
   LEFT OUTER JOIN Users u ON u.UserID = e.UID
   LEFT OUTER JOIN ExposureUser eu ON eu.ExposureId = e.ExposureID
-WHERE i.IncidentDateTime > @startPosition
+WHERE ( i.IncidentDateTime >= @startPosition AND i.IncidentDateTime < @endPosition )
 HAVING IncidentType LIKE '1%'
 ;
 

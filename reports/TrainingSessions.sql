@@ -3,7 +3,8 @@
 ### @jbuchbinder
 ###
 
-SELECT '2018-01-01 00:00:00' INTO @startPosition;
+SELECT '2019-01-01 00:00:00' INTO @startPosition;
+SELECT '2020-01-01 00:00:00' INTO @endPosition;
 
 SELECT
   c.startDate,
@@ -11,7 +12,8 @@ SELECT
   c.Notes
 FROM Schedule c
   LEFT OUTER JOIN Stations s ON s.StationID = c.StationsID
-WHERE c.Title = 'Training' AND c.startDate >= @startPosition
+WHERE c.Title = 'Training'
+  AND ( c.startDate >= @startPosition AND c.startDate < @endPosition )
 ORDER BY c.startDate
 ;
 

@@ -56,3 +56,4 @@ for i in ${TABLES[@]}; do
 	mysql -uroot EmergencyReporting < out/$i.sql
 done
 echo "[done]"
+

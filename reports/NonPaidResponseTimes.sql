@@ -7,7 +7,9 @@
 ###
 
 SET sql_mode = '';
+
 SELECT '2019-01-01 00:00:00' INTO @startPosition;
+SELECT '2020-01-01 00:00:00' INTO @endPosition;
 
 SELECT
   i.RunNumber AS '#',
@@ -22,7 +24,7 @@ FROM
   LEFT OUTER JOIN Apparatus a ON a.EID = e.ExposureID
 WHERE
   NOT ISNULL(a.EID)
-  AND STR_TO_DATE(i.IncidentDate, '%Y%m%d') > @startPosition
+  AND ( STR_TO_DATE(i.IncidentDate, '%Y%m%d') >= @startPosition AND STR_TO_DATE(i.IncidentDate, '%Y%m%d') < @endPosition )
   AND ((WEEKDAY(STR_TO_DATE(i.IncidentDate, '%Y%m%d')) IN ( 0, 1, 2, 3, 4 ) AND (STR_TO_DATE(i.IncidentTime, '%H%i%s') < '07:00:00' OR STR_TO_DATE(i.IncidentTime, '%H%i%s') > '16:00:00'))
     OR WEEKDAY(STR_TO_DATE(i.IncidentDate, '%Y%m%d')) IN ( 5, 6 ))
   AND i.IncidentType NOT LIKE '321 %' AND i.IncidentType NOT LIKE '320 %'
