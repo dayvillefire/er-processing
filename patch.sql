@@ -20,6 +20,7 @@ ALTER TABLE Users CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 
 # INDICES
 
+ALTER TABLE Apparatus ADD INDEX(IDOfApparatusOrResource(10));
 ALTER TABLE Exposures ADD INDEX (ExposureID);
 ALTER TABLE Exposures ADD INDEX (IID);
 ALTER TABLE Exposures ADD INDEX (UID);
