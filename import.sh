@@ -45,15 +45,15 @@ for t in ${TABLES[@]}; do
 done
 
 echo " * Creating/dropping MySQL database"
-mysql -uroot -Be "DROP DATABASE EmergencyReporting;"
-mysql -uroot -Be "CREATE DATABASE EmergencyReporting;"
-mysql -uroot EmergencyReporting < out/00-schema.sql
-mysql -uroot EmergencyReporting < patch.sql
+mysql -uer -per -Be "DROP DATABASE EmergencyReporting;"
+mysql -uer -per -Be "CREATE DATABASE EmergencyReporting;"
+mysql -uer -per EmergencyReporting < out/00-schema.sql
+mysql -uer -per EmergencyReporting < patch.sql
 
 echo -n " * Importing data : "
 for i in ${TABLES[@]}; do
 	echo -n "$i "
-	mysql -uroot EmergencyReporting < out/$i.sql
+	mysql -uer -per EmergencyReporting < out/$i.sql
 done
 echo "[done]"
 
