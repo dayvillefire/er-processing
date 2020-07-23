@@ -6,6 +6,8 @@
 SELECT '2020-01-01 00:00:00' INTO @startPosition;
 SELECT '2021-01-01 00:00:00' INTO @endPosition;
 
+SET sql_mode='';
+
 DROP TABLE IF EXISTS ResponseAggregate;
 
 CREATE TABLE ResponseAggregate
@@ -32,14 +34,23 @@ FROM Exposures e
   LEFT OUTER JOIN Apparatus a ON a.ApparatusID = eu.ApparatusID
 ;
 
+SELECT COUNT(DISTINCT RunNumber) INTO @totalCalls
+FROM ResponseAggregate
+WHERE
+  STR_TO_DATE(IncidentDate, '%Y%m%d') >= @startPosition AND
+  STR_TO_DATE(IncidentDate, '%Y%m%d') < @endPosition
+;
+
 SELECT
   p1.Name AS Name,
-  COUNT(DISTINCT p1.RunNumber) AS `TotalCalls`,
+  @totalCalls AS `TotalCalls`,
+  COUNT(DISTINCT p1.RunNumber) AS `TotalResponses`,
   COUNT(DISTINCT p2.RunNumber) AS `OnScene`,
   COUNT(DISTINCT p3.RunNumber) AS `POV`,
   COUNT(DISTINCT p2.RunNumber) - COUNT(DISTINCT p3.RunNumber) AS `Apparatus`,
   COUNT(DISTINCT p1.RunNumber) - COUNT(DISTINCT p2.RunNumber) AS `Standby`,
-  CONCAT(COUNT(DISTINCT p2.RunNumber) / COUNT(DISTINCT p1.RunNumber) * 100, '%') AS `RespPct`
+  CONCAT(COUNT(DISTINCT p2.RunNumber) / COUNT(DISTINCT p1.RunNumber) * 100, '%') AS `ScenePct`,
+  CONCAT((COUNT(DISTINCT p1.RunNumber) / @totalCalls ) * 100, '%') AS `TotalPct`
 FROM ResponseAggregate AS p1
   LEFT JOIN ResponseAggregate AS p2 ON ( p1.Name = p2.Name AND p1.RunNumber = p2.RunNumber AND p2.ApparatusType IN ( 'POV', 'APPARATUS' ) )
   LEFT JOIN ResponseAggregate AS p3 ON ( p1.Name = p3.Name AND p1.RunNumber = p3.RunNumber AND p3.ApparatusType IN ( 'POV' ) )
@@ -47,7 +58,7 @@ WHERE
   STR_TO_DATE(p1.IncidentDate, '%Y%m%d') >= @startPosition AND
   STR_TO_DATE(p1.IncidentDate, '%Y%m%d') < @endPosition
 GROUP BY p1.Name
-ORDER BY p1.LastName, p1.FirstName, RespPct DESC
+ORDER BY p1.LastName, p1.FirstName, ScenePct DESC
 ;
 
 DROP TABLE IF EXISTS ResponseAggregate;
