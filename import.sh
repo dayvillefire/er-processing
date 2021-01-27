@@ -27,6 +27,7 @@ TABLES=(
 	PayrollTimes
 	Schedule
 	Stations
+	Status
 	Users
 )
 

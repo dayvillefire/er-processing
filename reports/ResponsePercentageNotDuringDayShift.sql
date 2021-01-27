@@ -3,7 +3,7 @@
 ### @jbuchbinder
 ###
 
-SELECT '2020-07-01 00:00:00' INTO @startPosition;
+SELECT '2020-01-01 00:00:00' INTO @startPosition;
 SELECT '2021-01-01 00:00:00' INTO @endPosition;
 
 SET sql_mode='';
@@ -32,7 +32,7 @@ FROM Exposures e
   LEFT OUTER JOIN Users u ON u.UserID = e.UID
   LEFT OUTER JOIN ExposureUser eu ON eu.ExposureId = e.ExposureID
   LEFT OUTER JOIN Apparatus a ON a.ApparatusID = eu.ApparatusID
-WHERE WEEKDAY(i.IncidentDateTime) >= 5 OR HOUR(i.IncidentDateTime) < 7 OR HOUR(IncidentDateTime) > 16
+WHERE WEEKDAY(i.IncidentDateTime) >= 5 OR HOUR(i.IncidentDateTime) < 10 OR HOUR(IncidentDateTime) > 16
 ;
 
 SELECT COUNT(DISTINCT RunNumber) INTO @totalCalls

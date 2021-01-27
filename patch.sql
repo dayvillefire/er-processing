@@ -8,25 +8,27 @@ ALTER TABLE ExposureUser CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ALTER TABLE Incidents CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ALTER TABLE Narratives CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ALTER TABLE Narratives CHANGE COLUMN Narrative Narrative TEXT;
-ALTER TABLE Narratives CHANGE COLUMN CURR_TEXT CURR_TEXT TEXT;
+ALTER TABLE Narratives CHANGE COLUMN NarrativeHTML NarrativeHTML TEXT;
 ALTER TABLE NHTSAPatients CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ALTER TABLE NHTSAPersonnel CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ALTER TABLE PayrollTimes CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ALTER TABLE PayrollItems CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ALTER TABLE Schedule CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ALTER TABLE Stations CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
-ALTER TABLE Users CHANGE COLUMN IncidentSearchQuery IncidentSearchQuery TEXT;
+##ALTER TABLE Users CHANGE COLUMN IncidentSearchQuery IncidentSearchQuery TEXT;
 ALTER TABLE Users CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 
 # INDICES
 
-ALTER TABLE Apparatus ADD INDEX(IDOfApparatusOrResource(10));
+ALTER TABLE Apparatus ADD INDEX (IDOfApparatusOrResource(10));
+ALTER TABLE Apparatus ADD INDEX (EID);
 ALTER TABLE Exposures ADD INDEX (ExposureID);
 ALTER TABLE Exposures ADD INDEX (IID);
 ALTER TABLE Exposures ADD INDEX (UID);
 ALTER TABLE ExposureUser ADD INDEX (ExposureId);
 ALTER TABLE Incidents ADD INDEX (IncidentID);
 ALTER TABLE Incidents ADD INDEX (IncidentDateTime);
+ALTER TABLE Narratives ADD INDEX (EID);
 ALTER TABLE PayrollItems ADD INDEX (AID);
 ALTER TABLE PayrollItems ADD INDEX (ClassID);
 #ALTER TABLE PayrollItems ADD INDEX (StationID);
