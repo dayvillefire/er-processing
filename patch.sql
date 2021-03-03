@@ -15,6 +15,7 @@ ALTER TABLE PayrollTimes CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ALTER TABLE PayrollItems CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ALTER TABLE Schedule CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ALTER TABLE Stations CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
+ALTER TABLE Status CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 ##ALTER TABLE Users CHANGE COLUMN IncidentSearchQuery IncidentSearchQuery TEXT;
 ALTER TABLE Users CHANGE COLUMN LastUpdate LastUpdate VARCHAR(8);
 
